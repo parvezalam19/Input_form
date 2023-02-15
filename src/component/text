@@ -1,0 +1,67 @@
+To update the formData, simplemomentum, and trail values in the inputValue from the parent state, you can pass down a function from the parent component that updates the state values. Here's an example of how you can achieve this:
+
+In the parent component, define a state object with the formData, simplemomentum, and trail properties, and a function to update these values:
+
+scss
+Copy code
+import { useState } from "react";
+
+function ParentComponent() {
+  const [formData, setFormData] = useState("");
+  const [simplemomentum, setSimplemomentum] = useState("");
+  const [trail, setTrail] = useState("");
+
+  const updateInputValue = (formDataValue, simplemomentumValue, trailValue) => {
+    setFormData(formDataValue);
+    setSimplemomentum(simplemomentumValue);
+    setTrail(trailValue);
+  };
+
+  return (
+    <ChildComponent updateInputValue={updateInputValue} />
+  );
+}
+In the child component, you can now call the updateInputValue function from the parent component to update the state values:
+
+javascript
+Copy code
+function ChildComponent({ updateInputValue }) {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Call the updateInputValue function to update the state values
+    updateInputValue(formData, simplemomentum, trail);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Form Data:
+        <input
+          type="text"
+          value={formData}
+          onChange={(event) => setFormData(event.target.value)}
+        />
+      </label>
+      <label>
+        Simple Momentum:
+        <input
+          type="text"
+          value={simplemomentum}
+          onChange={(event) => setSimplemomentum(event.target.value)}
+        />
+      </label>
+      <label>
+        Trail:
+        <input
+          type="text"
+          value={trail}
+          onChange={(event) => setTrail(event.target.value)}
+        />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+By calling the updateInputValue function with the
